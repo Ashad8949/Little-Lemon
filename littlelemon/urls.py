@@ -28,4 +28,5 @@ urlpatterns = [
     path('', include('restaurant.urls')),
     path('api/',include('restaurantAPI.urls')),
     path('api/booking/', include(router.urls)),
+    path('voiceorder/', include('voiceorder.urls')),
 ]

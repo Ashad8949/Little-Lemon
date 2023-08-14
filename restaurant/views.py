@@ -73,3 +73,4 @@ def bookings(request):
     booking_json = serializers.serialize('json', bookings)
 
     return HttpResponse(booking_json, content_type='application/json')
+

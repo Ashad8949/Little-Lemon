@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'restaurant',
     'rest_framework',
     'restaurantAPI',
+    'voiceorder',
 ]
 
 MIDDLEWARE = [
