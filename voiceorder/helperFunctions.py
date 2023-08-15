@@ -22,7 +22,7 @@ def clean_text(text):
     stop_words.extend(["gimme", "lemme", "cause", "cuz", "imma", "gonna", "wanna", "please", "the", "and",
                        "gotta", "hafta", "woulda", "coulda", "shoulda", "howdy", "day", "can", "could",
                        "my", "mine", "I" "hey", "yoo", "deliver", "delivery", "delivered", "piece", "want",
-                       "send", "sent", "order", "pizza", "piz", "pizze", "address", "addrez", "to", "too"])
+                       "send", "sent", "order", "address", "addrez", "to", "too"])
     clean_texts = " ".join(
         [word.replace("X", "").replace("/", "") for word in text.split() if word.lower() not in stop_words])
     return clean_texts
@@ -32,24 +32,24 @@ def clean_text_order(text):
     stop_words.extend(["gimme", "lemme", "cause", "cuz", "imma", "gonna", "wanna", "please", "the", "and",
                        "gotta", "hafta", "woulda", "coulda", "shoulda", "howdy", "day", "can", "could",
                        "my", "mine", "I" "hey", "yoo", "deliver", "delivery", "delivered", "piece", "want",
-                       "send", "sent", "order", "pizza", "piz", "pizze", "address", "addrez", "to", "too"])
+                       "send", "sent", "order", "address", "addrez", "to", "too"])
     clean_texts = " ".join(
         [word.replace("X", "").replace("/", "") for word in text.split() if word.lower() not in stop_words])
     return clean_texts
 
 def get_keywords(text):
-    pizza_size = ["Giant", "Large", "Medium"]
-    pizza_topping = ["Pepperoni", "Bacon", "Chicken", "Anchovies", "Mushroom", "Onion", "Black olive", "Green pepper"]
+    pizza_size = ["Tea", "Water", "Lassi"]
+    pizza_topping = ["Samosa", "Pasta", "Salad", "Sushi", "Fried-Chicken", "Masala-Dosa", "Pizza", "Biryani"]
     order_size, order_topping = [], []
     check_size = True
     for word in text.split():
         if check_size:
             for size in pizza_size:
-                if SequenceMatcher(None, word, size).ratio() > 0.6:
+                if SequenceMatcher(None, word, size).ratio() > 0.4:
                     order_size.append(size)
                     check_size = False
         for topping in pizza_topping:
-            if SequenceMatcher(None, word, topping).ratio() > 0.6:
+            if SequenceMatcher(None, word, topping).ratio() > 0.4:
                 order_topping.append(topping)
                 pizza_topping.remove(topping)
     return order_size, order_topping

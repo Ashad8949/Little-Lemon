@@ -5,12 +5,12 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .helperFunctions import *
 
-language, raw_address, customer_address, raw_order, pizza_size, pizza_topping, play_audio = None, "G40,Batla House,Delhi", None, "A medium size pizza with chicken topping", None, None, None
+language, raw_order, pizza_size, pizza_topping, play_audio =  None, "A Lassi with pizza with Fried-Chicken topping", None, None, None
 
 
 def root(request):
-    global language, raw_address, customer_address, raw_order, pizza_size, pizza_topping, play_audio
-    language, raw_address, customer_address, raw_order, pizza_size, pizza_topping, play_audio = None, "Batla House,Delhi", None, "A medium size pizza with chicken topping", None, None, None
+    global language, raw_order, pizza_size, pizza_topping, play_audio
+    language, raw_order, pizza_size, pizza_topping, play_audio =  None, "A Lassi with pizza with Fried-Chicken topping", None, None, None
 
     # remove the existing files in the folder
     file = ["info.wav", "info_record.wav", "info_repeat.wav", "topping.wav", "topping_record.wav", "topping_repeat.wav"]
@@ -22,8 +22,8 @@ def root(request):
 def get_topping(request):
     global play_audio
     play_audio = "topping.wav"
-    result = "At Little Lemon Plaza, we offer a mouth-watering selection of giant, large, and medium pizzas, piled high with 8 delectable toppings to choose from. " \
-             "See the options in the picture below and indulge in the perfect pizza for you!"
+    result = "At Little Lemon Plaza, we offer a mouth-watering selection and draw inspiration from Indian, South Indian, Japaneses, Greek, and French culture. " \
+             "See the options in the picture below and indulge in the perfect meal for you!"
     text_to_speech(result, play_audio, language)
     return render(request, "getTopping.html")
 
@@ -44,18 +44,10 @@ def get_topping_redirect(request):
 def get_order(request):
     global play_audio
     play_audio = "order.wav"
-    if customer_address == None:
-        print("missing address")
-    elif not pizza_size:
-        print("missing pizza size")
-        order_size = ["Not defined"]
-    elif not pizza_topping:
-        print("missing pizza topping")
-
     result = str(
         "Thanks for using the Little Lemon Plaza to place your order. Just wanted to double check that I got it right, ya want a " +
         pizza_size[0] + " pizza with " + " ".join(
-            map(str, pizza_topping)) + ". And the delivery address is " + 'customer_address' +
+            map(str, pizza_topping))  +
         ", is that correct?")
     text_to_speech(result, play_audio, language)
     return render(request, "getOrder.html",
