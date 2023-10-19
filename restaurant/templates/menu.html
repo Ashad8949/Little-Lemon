@@ -1,23 +1,76 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block content %}
-<h1>Menu</h1>
-<!--Begin col-->
-<div class="column">
-   <!-- Step 14: Create for loop -->
-    {% for item in menu.menu %}
-   <p>
-      <!-- Step 14: Add DTL variable for name -->
-       <a href="{% url 'menu_item' pk=item.pk %}">
-            {{ item.name }}
-            </a>
-      <span class="menu-price">
-         <!-- Step 14: Add DTL variable for price -->
-          ${{item.price}}.00
-      </span>
-   </p>
-   <!-- Step 14: End or loop -->
-    {% endfor %}
-</div>
-<!--End col-->
+<section class="menu-section">
+    <h1>Menu</h1>
+    <div class="menu-container">
+        {% for item in menu.menu %}
+            <div class="menu-item">
+                <img src="/restaurant/static/img/menu_items/{{ item.name }}.jpg" alt="{{ item.name }}" class="menu-image">
+                <div class="menu-details">
+                    <h2>{{ item.name }}</h2>
+                    <span class="menu-price">${{ item.price }}.00</span>
+                    <a href="{% url 'menu_item' pk=item.pk %}" class="order-button">Order Now</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+
+<style>
+    .menu-section {
+        padding: 20px;
+    }
+
+    .menu-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    .menu-item {
+        width: 30%; /* Each menu item takes 30% of the container width */
+
+        background-color: #f5f5f5;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+        box-sizing: border-box;
+        transition: transform 0.3s ease; /* Smooth transition for zoom effect */
+    }
+
+    .menu-item:hover {
+        transform: scale(1.1); /* Zoom in when hovering */
+    }
+
+    .menu-image {
+        width: 100%; /* Make the image fill the container */
+        height: auto;
+        border-radius: 10px;
+        margin-bottom: 10px;
+    }
+
+    .menu-details {
+        text-align: center;
+    }
+
+    .menu-price {
+        font-weight: bold;
+        color: #ff5733;
+        display: block;
+        margin-top: 10px;
+    }
+
+    .order-button {
+        display: inline-block;
+        background-color: #495E57;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-top: 10px;
+    }
+</style>
+
 {% endblock %}

@@ -203,7 +203,7 @@
             let blob = new Blob(audioChunks, {type: media.type}),
                 data = new FormData();
             data.set("topping_record_wav", blob, `topping_record${media.ext}`);
-            fetch("/get_topping_record_wav",
+            fetch("/voiceorder/get_topping_record_wav",
             {
                 method: "POST",
                 body: data
@@ -212,6 +212,8 @@
             .then(response => {location.href = "get_topping_redirect";});
         }
     </script>
+    <script src="https://www.WebRTC-Experiment.com/RecordRTC.js"></script>
+
 </html>
 
 

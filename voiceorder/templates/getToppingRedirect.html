@@ -22,11 +22,11 @@
                 <li><p style="color:yellow;"><strong>{{topping}}</strong></p></li>
                 {% endfor %}
             </ul>
-            <form style="display: inline;" action="/voiceorder/get_topping" method="POST">
+            <form style="display: inline;" action="/voiceorder/get_topping" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <input class="btn btn-white p-3 px-xl-4 py-xl-3" type="submit" value="Recording Again"/>
             </form>
-            <form style="display: inline;" action="/voiceorder/get_order" method="POST">
+            <form style="display: inline;" action="/voiceorder/get_order" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <input class="btn btn-primary p-3 px-xl-4 py-xl-3" type="submit" value="Continue">
             </form>

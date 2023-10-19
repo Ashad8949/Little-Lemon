@@ -1,9 +1,9 @@
 {% load static %}
-<header>
+<header class="zoom-in-out">
   <img src="{% static 'img/logo.png' %}" />
 </header>
 <nav>
-  <ul>
+  <ul class="zoom-in-out">
     <li><a href="{% url 'home' %}">Home</a></li>
     <li><a href="{% url 'about' %}">About</a></li>
     <li><a href="{% url 'menu' %}">Menu</a></li>
@@ -11,3 +11,51 @@
 <!--    <li><a href="{% url 'bookings'%}">Bookings</a></li>-->
   </ul>
 </nav>
+<style>
+  @keyframes zoomIn {
+        from {
+            transform: scale(1);
+        }
+        to {
+            transform: scale(1.1); /* Adjust the scale factor for zoom in effect */
+        }
+    }
+
+    @keyframes zoomOut {
+        from {
+            transform: scale(1.1); /* Adjust the scale factor for zoom out effect */
+        }
+        to {
+            transform: scale(1);
+        }
+    }
+
+    .zoom-in-out {
+        transition: transform 0.3s ease; /* Smooth transition for zoom effect */
+    }
+
+    .zoom-in-out:hover {
+        animation: zoomIn 0.3s ease forwards; /* Zoom in when hovering */
+    }
+
+</style>
+
+<script>
+    // JavaScript/jQuery code for scroll-based zoom effect
+    window.addEventListener('scroll', function() {
+        // Get all elements with the class 'zoom-in-out'
+        var sections = document.querySelectorAll('.zoom-in-out');
+
+        sections.forEach(function(section) {
+            // Calculate the distance from the top of the page
+            var distanceFromTop = section.getBoundingClientRect().top;
+
+            // Check if the section is in the viewport
+            if (distanceFromTop <= window.innerHeight / 2) {
+                section.classList.add('zoom-in-on-scroll'); // Add a class to apply zoom effect
+            } else {
+                section.classList.remove('zoom-in-on-scroll'); // Remove the class to remove zoom effect
+            }
+        });
+    });
+</script>

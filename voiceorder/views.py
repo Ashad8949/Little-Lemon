@@ -2,7 +2,6 @@ import os
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-
 from .helperFunctions import *
 
 language, raw_order, pizza_size, pizza_topping, play_audio =  None, "A Lassi with pizza with Fried-Chicken topping", None, None, None
@@ -23,18 +22,19 @@ def get_topping(request):
     global play_audio
     play_audio = "topping.wav"
     result = "At Little Lemon Plaza, we offer a mouth-watering selection and draw inspiration from Indian, South Indian, Japaneses, Greek, and French culture. " \
-             "See the options in the picture below and indulge in the perfect meal for you!"
+             "See the options from the menu and indulge in the perfect meal for you!"
     text_to_speech(result, play_audio, language)
     return render(request, "getTopping.html")
 
 
 def get_topping_redirect(request):
+    print(request)
     global pizza_size, pizza_topping, play_audio
     clean_order = clean_text(raw_order)  # clean the stop words from audio files
     pizza_size, pizza_topping = get_keywords(clean_order)
 
     play_audio = "topping_repeat.wav"
-    result = "Just wanted to make sure, did ya order a " + pizza_size[0] + " pizza with: " + " ".join(
+    result = "Just wanted to make sure, did ya order a " + pizza_size[0] + " with: " + " ".join(
         map(str, pizza_topping)) + \
              " on it? If not, no worries, just give the recording again button another press."
     text_to_speech(result, play_audio, language)
@@ -57,6 +57,9 @@ def get_order(request):
 
 def get_topping_upload_wav(request):
     global raw_order
+    print(f"Received {request.method} request for {request.path}")
+    print(f"Request headers: {request.headers}")
+    print(f"Request body: {request.body}")
     if "topping_upload_wav" not in request.FILES:
         return HttpResponse("No audio file found")
     else:

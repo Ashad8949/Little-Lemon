@@ -1,4 +1,83 @@
 {% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    <style>
+        .chatbot-icon-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #495E57;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 80px; /* Adjust the size as needed */
+            height: 80px; /* Adjust the size as needed */
+            font-size: 24px;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .chatbot-icon-img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .chatbot-icon-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 16px;
+        }
+
+        .chatbot-iframe {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            width: 350px;
+            height: 430px;
+        }
+    </style>
+</head>
+<body>
+    <button id="chatbotIconButton" class="chatbot-icon-button">
+        <span class="chatbot-icon-text">Chat</span>
+    </button>
+
+    <!-- Chatbot iframe -->
+    <div id="chatbotIframe" class="chatbot-iframe">
+        <iframe
+            allow="microphone;"
+            width="350"
+            height="430"
+            src="https://console.dialogflow.com/api-client/demo/embedded/a3316133-1168-41ad-ae92-f630f60be409">
+        </iframe>
+    </div>
+
+    <script>
+        var chatbotIconButton = document.getElementById("chatbotIconButton");
+        var chatbotIframe = document.getElementById("chatbotIframe");
+
+        function toggleChatbot() {
+            if (chatbotIframe.style.display === "none") {
+                chatbotIframe.style.display = "block";
+            } else {
+                chatbotIframe.style.display = "none";
+            }
+        }
+
+        chatbotIconButton.addEventListener("click", toggleChatbot);
+    </script>
+</body>
+</html>
+
+
 <footer>
   <article>
     <img src="{% static 'img/logo_footer.png' %}" />
