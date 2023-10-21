@@ -1,16 +1,20 @@
-# from django.http import HttpResponse
-from django.shortcuts import render
-from .forms import BookingForm
-from .models import Menu
 from django.core import serializers
-from .models import Booking
-from datetime import datetime
-import json
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+
+from datetime import datetime
+from .forms import BookingForm, CreateUserForm
+from .models import Menu, Booking
+
+import json
 
 
 # Create your views here.
+@login_required(login_url='login')
 def home(request):
     return render(request, 'index.html')
 
@@ -18,6 +22,41 @@ def home(request):
 def about(request):
     return render(request, 'about.html')
 
+
+def login_user(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.info(request, "username or password is incorrect")
+            return render(request, 'login.html', {})
+    context = {}
+    return render(request, 'login.html', context)
+
+def logout_user(request):
+    logout(request)
+    return redirect('login')
+
+
+def register_user(request):
+    form = CreateUserForm()
+    if request.method == "POST":
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            user = form.cleaned_data.get('username')
+            messages.success(request, "Account was created for " + user)
+            return redirect('login')
+        else:
+            print(form.errors)
+    context = {"forms": form}
+    return render(request, 'register.html', context)
 
 def reservations(request):
     date = request.GET.get('date', datetime.today().date())
@@ -73,4 +112,3 @@ def bookings(request):
     booking_json = serializers.serialize('json', bookings)
 
     return HttpResponse(booking_json, content_type='application/json')
-

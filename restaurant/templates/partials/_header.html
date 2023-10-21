@@ -10,8 +10,15 @@
     <li><a href="{% url 'book' %}">Book</a></li>
 <!--    <li><a href="{% url 'bookings'%}">Bookings</a></li>-->
   </ul>
+  <span class="hello-msg">Hello, {{request.user}}</span>
+  <span><a href="{% url 'logout' %}">Logout</a></span>
 </nav>
 <style>
+  .hello-msg{
+    font-size:18px;
+    color: #fff;
+    margin-right: 20px;
+  }
   @keyframes zoomIn {
         from {
             transform: scale(1);

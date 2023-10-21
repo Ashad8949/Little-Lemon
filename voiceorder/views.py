@@ -4,12 +4,11 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from .helperFunctions import *
 
-language, raw_order, pizza_size, pizza_topping, play_audio =  None, "A Lassi with pizza with Fried-Chicken topping", None, None, None
-
+language, raw_order, pizza_size, pizza_topping, play_audio = None, "A Lassi with pizza with Fried-Chicken topping", None, None, None
 
 def root(request):
     global language, raw_order, pizza_size, pizza_topping, play_audio
-    language, raw_order, pizza_size, pizza_topping, play_audio =  None, "A Lassi with pizza with Fried-Chicken topping", None, None, None
+    language, raw_order, pizza_size, pizza_topping, play_audio = None, "A Lassi with pizza with Fried-Chicken topping", None, None, None
 
     # remove the existing files in the folder
     file = ["info.wav", "info_record.wav", "info_repeat.wav", "topping.wav", "topping_record.wav", "topping_repeat.wav"]
@@ -17,6 +16,7 @@ def root(request):
         bash_command = str("find . -path \*/" + i + " -delete")
         os.system(bash_command)
     return render(request, "main.html")
+
 
 def get_topping(request):
     global play_audio
@@ -47,12 +47,11 @@ def get_order(request):
     result = str(
         "Thanks for using the Little Lemon Plaza to place your order. Just wanted to double check that I got it right, ya want a " +
         pizza_size[0] + " pizza with " + " ".join(
-            map(str, pizza_topping))  +
+            map(str, pizza_topping)) +
         ", is that correct?")
     text_to_speech(result, play_audio, language)
     return render(request, "getOrder.html",
                   {"orderSize": pizza_size[0], "orderTopping": pizza_topping})
-
 
 
 def get_topping_upload_wav(request):
