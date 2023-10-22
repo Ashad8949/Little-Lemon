@@ -1,7 +1,16 @@
 {% load static %}
 <header class="zoom-in-out">
   <img src="{% static 'img/logo.png' %}" />
+
 </header>
+<div class="user-info">
+    <span class="hello-msg">Hello, {{request.user}}</span>
+    <button class="cart-button" onclick="window.location.href='{% url 'cart' %}'">Cart</button>
+    <button class="logout-button" onclick="window.location.href='{% url 'logout' %}'">Logout</button>
+</div>
+
+
+
 <nav>
   <ul class="zoom-in-out">
     <li><a href="{% url 'home' %}">Home</a></li>
@@ -10,15 +19,40 @@
     <li><a href="{% url 'book' %}">Book</a></li>
 <!--    <li><a href="{% url 'bookings'%}">Bookings</a></li>-->
   </ul>
-  <span class="hello-msg">Hello, {{request.user}}</span>
-  <span><a href="{% url 'logout' %}">Logout</a></span>
 </nav>
 <style>
-  .hello-msg{
-    font-size:18px;
+
+.user-info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 1;
+}
+
+.hello-msg {
+    margin-right: 1rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.logout-button {
+    background-color: #FF5733; /* Red color for the logout button */
     color: #fff;
-    margin-right: 20px;
-  }
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.25rem;
+    transition: background-color 0.3s ease; /* Add a smooth transition effect */
+}
+
+.logout-button:hover {
+    background-color: #FF1F00; /* Darker red color on hover */
+}
+
+
   @keyframes zoomIn {
         from {
             transform: scale(1);

@@ -1,0 +1,19 @@
+<!-- cart.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Your Cart</h1>
+    {% if cart_items %}
+        <ul>
+            {% for item in cart_items %}
+                <li>
+                    {{ item.menu_item.name }} - {{ item.quantity }}
+                    <button onclick="window.location.href='{% url 'remove_from_cart' item.pk %}'">Remove</button>
+                </li>
+            {% endfor %}
+        </ul>
+        <button onclick="window.location.href='{% url 'checkout' %}'">Buy Now</button>
+    {% else %}
+        <p>Your cart is empty.</p>
+    {% endif %}
+{% endblock %}

@@ -2,13 +2,13 @@ from django.core import serializers
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 
 from datetime import datetime
 from .forms import BookingForm, CreateUserForm
-from .models import Menu, Booking
+from .models import Menu, Booking, Cart
 
 import json
 
@@ -112,3 +112,28 @@ def bookings(request):
     booking_json = serializers.serialize('json', bookings)
 
     return HttpResponse(booking_json, content_type='application/json')
+
+@login_required(login_url='login')
+def add_to_cart(request, menu_item_id):
+    menu_item = Menu.objects.get(pk=menu_item_id)
+    cart_item, created = Cart.objects.get_or_create(user=request.user, menu_item=menu_item)
+    if not created:
+        cart_item.quantity += 1
+        cart_item.save()
+    return redirect('menu')
+
+def cart_view(request):
+    user_cart_items = Cart.objects.filter(user=request.user)
+    return render(request, 'cart.html', {'cart_items': user_cart_items})
+
+
+def remove_from_cart(request, item_id):
+    cart_item = get_object_or_404(Cart, pk=item_id)
+    cart_item.delete()
+    response_data = {
+        'message': 'Item removed from cart successfully.'
+    }
+    return JsonResponse(response_data)
+
+def checkout_view(request):
+    pass

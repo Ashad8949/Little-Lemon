@@ -10,7 +10,7 @@
                 <img src="/restaurant/static/img/menu_items/{{ item.name }}.jpg" alt="{{ item.name }}" class="menu-image">
                 <div class="menu-details">
                     <h2>{{ item.name }}</h2>
-                    <span class="menu-price">${{ item.price }}.00</span>
+                    <span class="menu-price">${{ item.price }}</span>
                     <a href="{% url 'menu_item' pk=item.pk %}" class="order-button">Order Now</a>
                 </div>
             </div>
