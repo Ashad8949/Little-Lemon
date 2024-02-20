@@ -1,9 +1,5 @@
 ﻿# Little-Lemon
 
- # Description
-This is the final assignment for the Bakend Developer Capstone Course of the Meta Backend Developer Professional Certificate on Coursera.
-<br> <br>
-
 # Project Structure
 The project is composed of two apps, `api` and `restaurant`. The `api` app serves API endpoints of the project, while the `restaurant` app serves its frontend. The `config` (the project folder) directory holds the major settings of the project
 <br> <br>
